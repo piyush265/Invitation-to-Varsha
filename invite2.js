@@ -1,7 +1,5 @@
 let currentScreen = 1;
 const typingSpeed = 50;
-let noButtonMoves = 0;
-const maxMoves = 50;
 
 function typeText(element, text, callback) {
     let index = 0;
@@ -36,18 +34,20 @@ function response(answer) {
         document.getElementById('final-response').innerText = 'Wohooooo!';
         nextScreen();
     } else {
-        if (noButtonMoves < maxMoves) {
-            let noButton = document.getElementById('no-button');
-            let maxTop = window.innerHeight - noButton.offsetHeight;
-            let maxLeft = window.innerWidth - noButton.offsetWidth;
-            noButton.style.position = 'absolute';
-            noButton.style.top = Math.random() * maxTop + 'px';
-            noButton.style.left = Math.random() * maxLeft + 'px';
-            noButtonMoves++;
-        } else {
-            document.getElementById('final-response').innerText = 'Oh no, you clicked No!';
-            nextScreen();
+        let noButton = document.getElementById('no-button');
+        let moveCount = 0;
+        const maxMoves = 50;
+
+        function moveButton() {
+            if (moveCount < maxMoves) {
+                noButton.style.position = 'absolute';
+                noButton.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+                noButton.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+                moveCount++;
+            }
         }
+        
+        noButton.addEventListener('mouseover', moveButton);
     }
 }
 
